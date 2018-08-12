@@ -22,12 +22,9 @@ class Engine
 private:
 	//The window in which the game is displayed
 	RenderWindow *MainWindow;
-	
-	//Clock for calculaing deltaTime
-	Clock clock;
 
 	//Actual Value of deltaTime
-	float DeltaTime;
+	float DeltaTime, logicDeltaTime, renderDeltaTime, afterFrameTime;
 
 	//The amount of time that has passed since the beginning of the game
 	long double ElapsedTime;
@@ -64,7 +61,7 @@ private:
 	std::queue<std::string> LogQueue;
 
 	//A flag for notifiying the Rendering thread and Logging thread that they need to terminate
-	bool Terminate;
+	bool Terminate, isRendering;
 
 	//The rendering function
 	void Render();
@@ -72,6 +69,7 @@ private:
 	//A Helper function that runs on a separate thread
 	void LogHelper();
 public:
+
 	//Dummy stringstream for logging purpose
 	std::stringstream ss;
 
@@ -86,6 +84,12 @@ public:
 
 	//Function for reading deltatime because it is a read only variable
 	float GetDeltaTime();
+
+	float GetLogicTime();
+
+	float GetRenderTime();
+
+	float GetAfterFrameTime();
 
 	//Function for registering objects for drawing
 	void RegisterObject(int Layer, Drawable* Object);
